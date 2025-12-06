@@ -2,3 +2,29 @@
     margin: 0;
     padding: 0;
 }
+.font-primary {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* Nav Styles */
+#nav{
+    margin: 30px 20px;
+}
+#nav .menus ul{
+    display: flex;
+    gap: 20px;
+}
+#nav .menus ul li{
+    list-style: none;
+}
+#nav .menus ul li a{
+    text-decoration: none;
+    color: rgb(1, 1, 53);
+    font-size: 16px;
+    font-weight: 400;
+}
+#nav .menus ul li a:hover{
+    color: rgb(50, 50, 51);
+}

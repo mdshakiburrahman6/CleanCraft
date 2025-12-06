@@ -11,7 +11,7 @@ function cleancraft_enqueues(){
     wp_enqueue_style('cleancract_custome_css');
 
     // Enqueue Bootstrap CSS
-    wp_register_style('cleancraft_bootstrap_css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet');
+    wp_register_style('cleancraft_bootstrap_css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css');
     wp_enqueue_style('cleancraft_bootstrap_css');
 
     //===========================//
