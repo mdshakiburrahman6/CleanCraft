@@ -15,16 +15,16 @@
                 <div class="col-md-12">
                     <nav class="nav d-flex justify-content-between" id="nav">
                         <div class="logo">
-                            <a href="<?php  ?>"><img src="<?php  ?>" alt="Logo"></a>
+                            <a href="<?php  ?>"><img src="<?php echo get_theme_mod('cleancraft_logo') ?>" alt="Logo"></a>
                         </div>
                         <div class="menus font-primary">
                            
-                        <?php 
-                            wp_nav_menu( array(
-                                'Theme_location' => 'main_menu',
-                                'menu_id' => 'main-menu',
-                            )); 
-                        ?>
+                            <?php 
+                                wp_nav_menu( array(
+                                    'Theme_location' => 'main_menu',
+                                    'menu_id' => 'main-menu',
+                                )); 
+                            ?>
                         
                         <!-- <ul class="">
                                 <li><a href="#">Home</a></li>

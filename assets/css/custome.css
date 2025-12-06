@@ -9,26 +9,15 @@
 }
 
 /* Nav Styles */
-/* #nav{
+#nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin: 30px 20px;
 }
-#nav .menus ul{
-    display: flex;
-    gap: 20px;
+.logo a img{
+    width: 30%;
 }
-#nav .menus ul li{
-    list-style: none;
-}
-#nav .menus ul li a{
-    text-decoration: none;
-    color: rgb(1, 1, 53);
-    font-size: 16px;
-    font-weight: 400;
-}
-#nav .menus ul li a:hover{
-    color: rgb(50, 50, 51);
-} */
-/* Menu Styles */
 #nav > #main-menu {
     display: flex;
     align-items: center;
@@ -59,7 +48,7 @@
     top: 100%;
     left: 0;
     background: #fff;
-    min-width: 180px;
+    /* min-width: 180px; */
     padding: 5px 0;
     text-align: left;
     margin-top: 5px;
