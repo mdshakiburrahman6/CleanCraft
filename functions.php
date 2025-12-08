@@ -15,3 +15,5 @@ include_once 'inc/header_customizer.php';
 
 
 // include Footer Customizer
+
+include_once 'inc/footer-customizer.php';

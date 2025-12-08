@@ -6,8 +6,11 @@
 
 <!-- Inclued Header -->
 <?php get_header(); ?>
-    <main>
+
+    <main style="width: 100%; height:80vh">
     
     </main>
-<?php get_header(); ?>
+
+    
+<?php get_footer(); ?>
     

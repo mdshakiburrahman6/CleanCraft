@@ -12,11 +12,13 @@
     <header>           
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <nav class="nav d-flex justify-content-between" id="nav">
+                <nav class="nav d-flex justify-content-between align-items-center" id="nav">
+                    <div class="col-md-3">
                         <div class="logo">
                             <a href="<?php  ?>"><img src="<?php echo get_theme_mod('cleancraft_logo') ?>" alt="Logo"></a>
                         </div>
+                    </div>
+                    <div class="col-md-9">
                         <div class="menus font-primary">
                            
                             <?php 
@@ -25,18 +27,9 @@
                                     'menu_id' => 'main-menu',
                                 )); 
                             ?>
-                        
-                        <!-- <ul class="">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Portfolio</a></li>
-                                <li><a href="#">Galery</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
-                            </ul> -->
                         </div>
-                    </nav>
-                </div>
+                    </div>
+                </nav>
             </div>
         </div>
     </header>

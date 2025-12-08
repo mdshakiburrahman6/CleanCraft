@@ -10,13 +10,18 @@
 
 /* Nav Styles */
 #nav{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin: 30px 20px;
 }
+.logo{
+    display: flex;
+    justify-content: start;
+}
 .logo a img{
-    width: 30%;
+    width: 50%;
+}
+.menus{
+    display: flex;
+    justify-content: end;
 }
 #nav > #main-menu {
     display: flex;
@@ -84,3 +89,21 @@
 #main-menu ul li:hover > ul {
     display: block;
 }
+
+
+
+/* Footer style */
+.footer-area{
+    padding: 50px 0px 20px 0px;
+    background-color: rgb(0, 0, 0);
+}
+.footer-container{
+    width: 100%;
+}
+.footer_logo{
+    width: 100%;
+}
+
+/* ================================
+Responsive Design
+==================================*/

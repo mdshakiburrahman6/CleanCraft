@@ -6,6 +6,8 @@ register_nav_menu('main_menu', __('Primary Menu', 'cleancraft'));
 
 // Header Customizer
 function cleancraft_header($wp_customize){
+
+    // Logo Customizarion
     $wp_customize->add_section('cleancraft_header_customizer', array(
         'title' => 'CleanCraft Header',
         'description' => 'You can change CleanCraft Theme header from here',
@@ -19,5 +21,22 @@ function cleancraft_header($wp_customize){
         'section' => 'cleancraft_header_customizer',
         'setting' => 'cleancraft_logo',
     )));
+
+    // Menu Position
+    // $wp_customize->add_setting('cleancraft_menu', array(
+    //     'default' => 'right_menu',
+    // ));
+    // $wp_customize->add_control('cleancraft_menu', array(
+    //     'label' => 'CleanCraft Menu',
+    //     'description' => 'Chnage menu position from here',
+    //     'section' => 'cleancraft_header_customizer',
+    //     'setting' => 'cleancraft_menu',
+    //     'type' => 'radio',
+    //     'option' => array(
+    //         'left_menu' => 'Left Menu',
+    //         'right_menu' => 'Right Menu',
+    //     ),
+    // ));
+
 }
 add_action('customize_register','cleancraft_header');
