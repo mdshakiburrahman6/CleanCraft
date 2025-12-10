@@ -1,8 +1,13 @@
 <?php
 
 // Register Footer Menu
-register_nav_menu('footer_menu', __('Footer Menu', 'cleancraft'));
-
+function cleancraft_footer_menus_register() {
+    register_nav_menus(array(
+        'footer_menu'     => __('Footer Menu', 'cleancraft'),
+        'secondary_menu'  => __('Secondary Menu', 'cleancraft'),
+    ));
+}
+add_action('after_setup_theme', 'cleancraft_footer_menus_register');
 
 // Footer Custoimzer
 function cleancraft_footer($wp_customize){

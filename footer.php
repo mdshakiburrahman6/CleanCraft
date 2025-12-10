@@ -12,10 +12,11 @@
                             <h3>Quick Links</h3>
                             <!-- <div class="footer-menu"> -->
                                 <?php 
-                                    wp_nav_menu( array(
-                                        'Theme_location' => 'main_menu',
-                                        'menu_class' => 'footer-menu',
-                                    )); 
+                                    wp_nav_menu( [
+                                                    'theme_location' => 'footer_menu',
+                                                    'menu_class'     => 'footer-menu',
+                                                    'fallback_cb'    => false,
+                                                ]); 
                                 ?>
                                 <!-- <ul>
                                     <li><a href="#">Home</a></li>
@@ -31,11 +32,18 @@
                         <div class="footer-container">
                             <h3>Extra Pages</h3>
                             <div class="footer-menu">
-                                <ul>
+                                <?php 
+                                    wp_nav_menu( [
+                                                    'theme_location' => 'secondary_menu',
+                                                    'menu_class'     => 'footer-menu',
+                                                    'fallback_cb'    => false,
+                                                ]); 
+                                ?>
+                                <!-- <ul>
                                     <li><a href="#">Cookie Policy</a></li>
                                     <li><a href="#">Privacy Policy</a></li>
                                     <li><a href="#">Terms & Condition</a></li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                     </div>
