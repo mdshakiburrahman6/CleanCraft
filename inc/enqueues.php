@@ -29,5 +29,9 @@ function cleancraft_enqueues(){
     wp_register_style('cleancrafr_font','https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
     wp_enqueue_style('cleancrafr_font');
 
+    // Enqueue Font Awesome Icons
+    wp_register_style('cleancrafr_icons','https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css');
+    wp_enqueue_style('cleancrafr_icons');
+
 }
 add_action('wp_enqueue_scripts', 'cleancraft_enqueues');

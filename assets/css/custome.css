@@ -100,10 +100,44 @@
 .footer-container{
     width: 100%;
 }
-.footer_logo{
-    width: 100%;
+.footer-container h3{
+    color: #fff;
 }
-
+.footer_logo{
+    width: 80%;
+}
+.quick_links{
+    margin-left: 80px;
+}
+.footer-menu{
+    margin: 0;
+    padding: 0;
+}
+.footer-menu li{
+    list-style: none;    
+}
+.footer-menu li a{
+    text-decoration: none;
+    color: #fff;
+}
+.social-links{
+    display:  flex;
+    justify-content: start;
+    align-items: start;
+    gap: 20px;
+}
+.social-links a{
+    text-decoration: none;
+}
+.social-links a i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   color: black;
+   padding: 10px 20px;
+   background-color: white;
+   border-radius: 50%;
+}
 /* ================================
 Responsive Design
 ==================================*/

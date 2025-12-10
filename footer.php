@@ -4,29 +4,51 @@
                     <div class="col-md-3">
                         <div class="footer-container d-flex flex-column justify-content-start align-items-start gap-3">
                             <a class="d-flex justify-content-start align-items-start" href="<?php echo home_url( ); ?>"><img class="footer_logo" src="<?php echo get_theme_mod('cleancraft_footer_logo') ?>" alt="Logo"></a>
-                            <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus accusamus officia, est tempora sed dolores velit et fuga deleniti exercitationem ea culpa mollitia minus nemo?</p>
+                            <p class="text-white"><?php echo get_theme_mod('cleancraft_footer_tag') ?></p>
                         </div>
                     </div>
                     <div class="col-md-3 ml-4">
-                        <div class="footer-container">
+                        <div class="footer-container quick_links">
                             <h3>Quick Links</h3>
-                            <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Portfolio</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
-                            </ul>
+                            <!-- <div class="footer-menu"> -->
+                                <?php 
+                                    wp_nav_menu( array(
+                                        'Theme_location' => 'main_menu',
+                                        'menu_class' => 'footer-menu',
+                                    )); 
+                                ?>
+                                <!-- <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#">Portfolio</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul> -->
+                            <!-- </div> -->
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="footer-container">
-
+                            <h3>Extra Pages</h3>
+                            <div class="footer-menu">
+                                <ul>
+                                    <li><a href="#">Cookie Policy</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms & Condition</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="footer-container">
-
+                            <h3>Social Links</h3>
+                            <div class="social-links">
+                                <?php echo get_theme_mod('cleancraft_footer_social'); ?>
+                                <!-- <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-youtube"></i> -->
+                            </div>
                         </div>
                     </div>
             </div>
@@ -34,7 +56,7 @@
         <div class="container">
              <div class="row">
                 <div class="col-md-12">
-                    <p class="d-flex justify-content-center align-items-center text-white">Copyright Text</p>
+                    <p class="d-flex justify-content-center align-items-center text-white">  </p>
                 </div>
             </div>
         </div>

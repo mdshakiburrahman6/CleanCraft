@@ -1,5 +1,9 @@
 <?php
 
+// Register Footer Menu
+register_nav_menu('footer_menu', __('Footer Menu', 'cleancraft'));
+
+
 // Footer Custoimzer
 function cleancraft_footer($wp_customize){
      // Logo Customizarion
@@ -16,10 +20,8 @@ function cleancraft_footer($wp_customize){
         'section' => 'cleancraft_footer_customizer',
         'setting' => 'cleancraft_footer_logo',
     )));
+
+    
 }
 add_action('customize_register', 'cleancraft_footer');
-
-
-
-
 

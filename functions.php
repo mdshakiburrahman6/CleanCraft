@@ -1,5 +1,7 @@
 <?php
 
+error_log("Footer Customizer Loaded");
+
 // =======================
 // Theme Function File
 //=======================
