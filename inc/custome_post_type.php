@@ -26,3 +26,43 @@ function cleanCraft_custome_post(){
     ));
 }
 add_action('init', 'cleanCraft_custome_post');
+
+// ===========================
+// Add Meta box for Portfolio
+// ==========================
+
+// Register Metabox
+function cleancraft_portfolio_add_meta_box(){
+    add_meta_box(
+        'portfolio_metaa_box_id',  // id
+        'Portfolio Details', // Title
+        'cleancraft_portfolio_meta_box_field', //Callback
+        'portfolio', // post type
+        'side', // position
+        'high' // Priority
+    );
+}
+add_action('add_meta_boxes', 'cleancraft_portfolio_add_meta_box');
+
+
+// Meta box fields
+function cleancraft_portfolio_meta_box_field($post){
+
+    // Get old Value
+    $port_auth_name = get_post_meta($post->ID, 'cleancraft_portfolio_auth_name', true);
+
+    ?>
+        <p>
+            <label for="cleancraft_portfolio_auth_name"></label>
+            <input style="width: 100%;" name="cleancraft_portfolio_auth_name" type="text" placeholder="Author Name" value="<?php echo esc_attr($port_auth_name ); ?>">
+        </p>
+    <?php
+}
+
+// Save MetaBox 
+function cleancraft_meta_boxes_data_save($post_id){
+    if(array_key_exists('cleancraft_portfolio_auth_name', $_POST)){
+        update_post_meta($post_id, 'cleancraft_portfolio_auth_name', sanitize_text_field( $_POST['cleancraft_portfolio_auth_name'] ));
+    }
+}
+add_action('save_post', 'cleancraft_meta_boxes_data_save');
