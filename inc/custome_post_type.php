@@ -84,12 +84,12 @@ function cleancraft_custom_post_service(){
             'new_item'      =>  'New Service',
             'not_found'     => 'No services found!! Please create a new service.',
         ),
-        'manu_icon'             => 'dashicons-editor-kitchensink',
-        'meni_posotion'         => 7,
+        'menu_icon'             => 'dashicons-editor-kitchensink',
+        'meni_position'         => 7,
         'public'                => true,
         'publicly_queryable'    => true,
-        'has_arcihve'           => true,
-        'cxclude_from_search'   => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => true,
         'hierarchical'          => false,
         'show_ui'               => true,
         'capability_type'       => 'post',
@@ -100,11 +100,7 @@ function cleancraft_custom_post_service(){
 add_action('init', 'cleancraft_custom_post_service');
 
 
-
-
-// ------------- Service Meta Box ------------------- //
-
-// Register Meta box - service
+/* // Register Meta box - service
 function cleancraft_service_meta_box(){
     add_meta_box(
         'service_id',
@@ -135,3 +131,83 @@ function cleancraft_service_meta_field_save($post_id){
     }
 }
 add_action('save_post','cleancraft_service_meta_field_save');
+
+*/ 
+//
+
+
+// ------------- Service Meta Box ------------------- //
+
+// ------------- Service Meta Box ------------------- //
+function cleancraft_service_meta_box(){
+    add_meta_box(
+        'service_id',
+        __('Service Image', 'cleancraft'),
+        'cleancraft_service_meta_field',
+        'service',
+        'side',
+        'low'
+    );
+}
+add_action('add_meta_boxes', 'cleancraft_service_meta_box');
+
+function cleancraft_service_meta_field($post){
+    // nonce for security
+    wp_nonce_field('cleancraft_service_image_nonce', 'cleancraft_service_image_nonce_field');
+
+    // Get saved attachment ID (we store attachment ID)
+    $attachment_id = get_post_meta($post->ID, '_service_image_id', true);
+
+    // If we have an attachment id, get the image HTML for preview
+    $image_html = $attachment_id ? wp_get_attachment_image($attachment_id, 'medium') : '';
+
+    ?>
+    <div class="cleancraft-service-image-wrapper">
+        <div class="service-image-preview"><?php echo $image_html; ?></div>
+
+        <input type="hidden" name="service_image_id" id="service_image_id" value="<?php echo esc_attr( $attachment_id ); ?>">
+
+        <p>
+            <a href="#" class="button button-secondary" id="cleancraft_set_service_image"><?php _e('Choose Image', 'cleancraft'); ?></a>
+            <a href="#" class="button button-secondary" id="cleancraft_remove_service_image" <?php echo $attachment_id ? '' : 'style="display:none"'; ?>><?php _e('Remove Image', 'cleancraft'); ?></a>
+        </p>
+    </div>
+    <?php
+}
+
+// Save handler
+function cleancraft_service_meta_field_save($post_id){
+    // autosave / permissions / nonce checks
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can('edit_post', $post_id) ) return;
+    if ( ! isset($_POST['cleancraft_service_image_nonce_field']) ) return;
+    if ( ! wp_verify_nonce($_POST['cleancraft_service_image_nonce_field'], 'cleancraft_service_image_nonce') ) return;
+
+    // Save attachment ID (or delete if empty)
+    if ( isset($_POST['service_image_id']) && '' !== $_POST['service_image_id'] ) {
+        $attachment_id = intval( $_POST['service_image_id'] );
+        update_post_meta($post_id, '_service_image_id', $attachment_id);
+    } else {
+        delete_post_meta($post_id, '_service_image_id');
+    }
+}
+add_action('save_post','cleancraft_service_meta_field_save');
+
+// Enqueue admin scripts for media uploader (only where needed)
+function cleancraft_admin_enqueue_media_script($hook){
+    global $post;
+
+    if ( in_array($hook, array('post.php','post-new.php')) && isset($post) && $post->post_type === 'service' ) {
+
+        wp_enqueue_media();
+
+        wp_enqueue_script(
+            'cleancraft-service-meta-js',
+            get_template_directory_uri() . '/assets/js/cleancraft-service-meta.js',
+            array('jquery'),
+            '1.0',
+            true
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'cleancraft_admin_enqueue_media_script');
