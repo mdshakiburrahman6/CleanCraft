@@ -8,4 +8,4 @@
 add_theme_support('title-tag');
 
 //  Add Blog 
-add_theme_support( 'post-thumbnails', array('page','post', 'portfolio') );
+add_theme_support( 'post-thumbnails', array('page','post', 'portfolio','service') );

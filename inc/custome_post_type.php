@@ -66,3 +66,35 @@ function cleancraft_meta_boxes_data_save($post_id){
     }
 }
 add_action('save_post', 'cleancraft_meta_boxes_data_save');
+
+
+
+// ------------------------------------------------------------------------------------------------------------
+// Services 
+//-------------------------------------------------------------------------------------------------------------
+function cleancraft_custom_post_service(){
+    register_post_type('service', array(
+        'labels' => array(
+            'name'          => 'Service',
+            'singular_name' => 'Service',
+            'add_new'       => 'Add New Service',
+            'add_new_item'  => 'Add New Service',
+            'edit_item'     => 'Edit Service',
+            'view_item'     => 'View Service',
+            'new_item'      =>  'New Service',
+            'not_found'     => 'No services found!! Please create a new service.',
+        ),
+        'manu_icon'             => 'dashicons-editor-kitchensink',
+        'meni_posotion'         => 7,
+        'public'                => true,
+        'publicly_queryable'    => true,
+        'has_arcihve'           => true,
+        'cxclude_from_search'   => true,
+        'hierarchical'          => false,
+        'show_ui'               => true,
+        'capability_type'       => 'post',
+        'rewrite'               => array('slug' => 'service'),
+        'supports'              => array('title','thumbnail','editor','excerpt'),
+    ));
+}
+add_action('init', 'cleancraft_custom_post_service');
