@@ -98,3 +98,40 @@ function cleancraft_custom_post_service(){
     ));
 }
 add_action('init', 'cleancraft_custom_post_service');
+
+
+
+
+// ------------- Service Meta Box ------------------- //
+
+// Register Meta box - service
+function cleancraft_service_meta_box(){
+    add_meta_box(
+        'service_id',
+        'Service Image',
+        'cleancraft_service_meta_field',
+        'service',
+        'side',
+        'low',
+    );
+}
+add_action('add_meta_boxes', 'cleancraft_service_meta_box');
+
+
+function cleancraft_service_meta_field($post){
+    // Get Old Data
+    $service_image = get_post_meta($post->ID, 'service_image', true);
+
+    // HTML Meta Fields
+    ?>
+        <label for="service_image">Service Image</label>
+        <input name="service_image" type="file" value="<?php echo esc_attr( $service_image ); ?>">
+    <?php
+}
+
+function cleancraft_service_meta_field_save($post_id){
+    if(array_key_exists('service_image', $_POST)){
+        update_post_meta($post_id, 'service_image', sanitize_post_field( $_POST['service_image']));
+    }
+}
+add_action('save_post','cleancraft_service_meta_field_save');
