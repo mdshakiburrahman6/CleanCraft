@@ -21,7 +21,20 @@ function cleancraft_footer($wp_customize){
         'setting' => 'cleancraft_footer_logo',
     )));
 
+    // Footer Tag Customizer
+    $wp_customize->add_setting('cleancraft_footer_tag', array(
+        'default' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum id vero quod earum aliquam. Sint deleniti officiis voluptatibus vel iure.',
+    ));
+    $wp_customize->add_control('cleancraft_footer_tag', array(
+        'label' => 'CleanCraft Footer Tag',
+        'description' => 'Chnage Footer tag from here',
+        'section' => 'cleancraft_footer_customizer',
+        'setting' => 'cleancraft_footer_tag',
+    ));
+
     
+   
+
 }
 add_action('customize_register', 'cleancraft_footer');
 
