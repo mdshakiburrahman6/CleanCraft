@@ -7,7 +7,15 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
-
+/* Mian Style */
+main{
+    margin: 50px 0;
+}
+.header{
+    background-color: rgba(255, 255, 255, 0.082);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(230, 230, 230, 0.418);
+}
 /* Nav Styles */
 #nav{
     margin: 30px 20px;
@@ -99,6 +107,9 @@
 }
 .footer-container{
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .footer-container h3{
     color: #fff;
@@ -112,6 +123,9 @@
 .footer-menu{
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 .footer-menu li{
     list-style: none;    
@@ -138,6 +152,56 @@
    background-color: white;
    border-radius: 50%;
 }
+
+
+
+
+/* ===================================== 
+Blogs Archive Design
+=======================================*/
+.post-cards{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    /* grid-template-rows: ; */
+    gap: 30px;
+}
+.post-cards .blog{
+    background-color: white;
+    box-shadow: 0px 0px 20px rgba(231, 231, 231, 0.836);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.post-cards .blog a img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(228, 228, 228, 0.466);
+    margin-bottom: 20px;
+}
+.post-cards .blog a{
+    text-decoration: none;
+}
+.post-cards .blog .blog-title{
+    color: #000;
+    font-size: 24px;
+}
+.post-cards .blog p{
+    color: #505050;
+    font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
 /* ================================
 Responsive Design
 ==================================*/

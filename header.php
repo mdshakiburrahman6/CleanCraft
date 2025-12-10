@@ -9,7 +9,7 @@
 </head>
 <body <?php body_class(); ?>>
     
-    <header>           
+    <header class="header">           
         <div class="container">
             <div class="row">
                 <nav class="nav d-flex justify-content-between align-items-center" id="nav">
