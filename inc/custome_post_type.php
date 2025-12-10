@@ -39,7 +39,7 @@ function cleancraft_portfolio_add_meta_box(){
         'cleancraft_portfolio_meta_box_field', //Callback
         'portfolio', // post type
         'side', // position
-        'high' // Priority
+        'low' // Priority
     );
 }
 add_action('add_meta_boxes', 'cleancraft_portfolio_add_meta_box');
