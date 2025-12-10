@@ -33,7 +33,34 @@ function cleancraft_footer($wp_customize){
     ));
 
     
-   
+    // Footer Social Link Customizer
+    $wp_customize->add_setting('cleancraft_footer_social', array(
+        'default' => 'FB, IN, INSTA, YT',
+    ));
+    $wp_customize->add_control('cleancraft_footer_social', array(
+        'label' => 'Social Links',
+        'description' => 'Chnage Footer Social Links from here',
+        'section' => 'cleancraft_footer_customizer',
+        'setting' => 'cleancraft_footer_social',
+        'type' => 'select',
+        'choices' => array(
+            '<a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i>'           => 'FB, IN, INSTA, YT',
+
+            '<a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>'     => 'FB, IN, INSTA',
+
+            '<a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>'     => 'FB, INSTA',
+
+            '<a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i>'           => 'FB, INSTA, YT',
+        )
+    ));
 
 }
 add_action('customize_register', 'cleancraft_footer');
