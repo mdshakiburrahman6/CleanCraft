@@ -1,6 +1,6 @@
 <?php  
 
-// Theme Main Index file
+// Theme Profolio Archive Page
 
 ?>
 <!-- Inclued Header -->
@@ -17,6 +17,7 @@
                                     while(have_posts( )) :
                                         the_post( );    
                             ?>
+
                                 <div class="blog secondury-font">
                                     <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail();?></a>
                                     <a href="<?php the_permalink(); ?>"><h5 class="blog-title"><?php the_title();?></h5></a>
