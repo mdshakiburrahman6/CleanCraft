@@ -92,6 +92,7 @@ function cleancraft_custom_post_service(){
         'exclude_from_search'   => true,
         'hierarchical'          => false,
         'show_ui'               => true,
+        'taxonomies'            => array('category','post_tag'),
         'capability_type'       => 'post',
         'rewrite'               => array('slug' => 'service'),
         'supports'              => array('title','thumbnail','editor','excerpt'),
@@ -211,3 +212,31 @@ function cleancraft_admin_enqueue_media_script($hook){
     }
 }
 add_action('admin_enqueue_scripts', 'cleancraft_admin_enqueue_media_script');
+
+
+
+/* Register Custom Taxonomy for services */
+function cleancraft_service_custom_taxonomy(){
+    $labels = array(
+        'name' => 'Service Type',
+        'singular_name' => 'Service Type',
+        'add_new' => 'Add New Service Type',
+        'add_new_item' => 'Add New Service Type',
+        'view_item' => 'View Service Type',
+        'new_item' => 'New Service Type',
+        'edit_item' => 'Edit Service Type',
+        'all_items' => 'All Service Types',
+        'update_item' => 'Update Service Type',
+        'search_items' => 'Search Service Types',
+    );
+
+    $args = array(
+        'labels' => $labels,
+        'hierarchical' => true,   // True For Category & False for Tag
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'rewrite' => array('slug' => 'service_type'),
+    );
+    register_taxonomy('service_type', array('service'), $args);
+}
+add_action('init','cleancraft_service_custom_taxonomy');
