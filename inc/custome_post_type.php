@@ -74,7 +74,7 @@ add_action('save_post', 'cleancraft_meta_boxes_data_save');
 //-------------------------------------------------------------------------------------------------------------
 function cleancraft_custom_post_service(){
     register_post_type('service', array(
-        'labels' => array(
+        'labels' => array(   // Labels
             'name'          => 'Service',
             'singular_name' => 'Service',
             'add_new'       => 'Add New Service',
@@ -84,7 +84,7 @@ function cleancraft_custom_post_service(){
             'new_item'      =>  'New Service',
             'not_found'     => 'No services found!! Please create a new service.',
         ),
-        'menu_icon'             => 'dashicons-editor-kitchensink',
+        'menu_icon'             => 'dashicons-editor-kitchensink',  // args
         'meni_position'         => 7,
         'public'                => true,
         'publicly_queryable'    => true,
@@ -240,3 +240,109 @@ function cleancraft_service_custom_taxonomy(){
     register_taxonomy('service_type', array('service'), $args);
 }
 add_action('init','cleancraft_service_custom_taxonomy');
+
+
+
+
+
+
+
+
+
+
+/*   =============================================================
+                        Custom Post Type = Article
+==============================================================   */ 
+
+// 1. Register Post Type
+function cleancraft_article(){
+    $labels = array(
+        'name' => 'Article',
+        'singular_name' => 'Article',
+        'all_item' => 'All Articles',
+        'new_item' => 'New Article',
+        'edit_item' => 'Edit Article',
+        'view_item' => 'View Article',
+        'add_item'  => 'Add New Article',
+        'add_new_item' => 'Add New Article',
+        'not_found' => 'No Article found!! Please add a Article.',
+    );
+    $args = array(
+        'labels' => $labels,
+        'menu_icon' => 'dashicons-id-alt',
+        'meni_position'         => 8,
+        'public'                => true,
+        'publicly_queryable'    => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => true,
+        'hierarchical'          => false,
+        'show_ui'               => true,
+        'taxonomies'            => array('category','post_tag'),
+        'capability_type'       => 'post',
+        'rewrite'               => array('slug' => 'article'),
+        'supports'              => array('title','thumbnail','excerpt'),
+    );
+    register_post_type('article', $args, true );
+}
+add_filter('init', 'cleancraft_article');
+
+
+//  2. Add Custome Meta Box
+function cleancraft_article_meta_boxes(){
+    add_meta_box(
+        'article_meta_boxes',
+        'Article Content',
+        'article_meta_boxes_callback',
+        'article',
+        'normal',
+        'high',
+    );
+}
+add_action('add_meta_boxes', 'cleancraft_article_meta_boxes');
+
+// 3. Display Multiple Editors
+function article_meta_boxes_callback($post){
+
+    wp_nonce_field('article_meta_boxes_nonce', 'article_meta_boxes_nonce_fields');
+
+    $article_overview = get_post_meta($post->ID, 'article_overview', true);
+
+    ?>
+        <p><strong>Article Overview</strong></p>
+        <?php wp_editor($article_overview, 'article_overview', array(
+            'textarea_name' => 'Article Overview',
+            'textarea_rows' => 8,
+            'media_buttons' => true,
+        )); ?>
+    <?php
+
+}
+
+
+// 4. Save Meta Fields
+function cleancraft_article_save($post_id){
+
+    if(!isset($_POST['article_meta_boxes_nonce_fields']) || !wp_verify_nonce($_POST['article_meta_boxes_nonce_fields'], 'article_meta_boxes_nonce')){
+        return;
+    }
+
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE){
+        return;
+    }
+
+    if(!current_user_can('edit_post', $post_id)){
+        return;
+    }
+
+    $fields = array(
+        'article_overview' => '_article_overview',
+    );
+
+    foreach ($fields as $field => $meta_key){
+        if(isset($_POST[$field])){
+            update_post_meta( $post_id, $meta_key, wp_kses_post( $field ) );
+        }
+    }
+
+}
+add_action('save_post','cleancraft_article_save');
