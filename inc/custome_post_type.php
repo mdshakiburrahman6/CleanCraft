@@ -277,10 +277,10 @@ function cleancraft_article(){
         'exclude_from_search'   => true,
         'hierarchical'          => false,
         'show_ui'               => true,
-        'taxonomies'            => array('category','post_tag'),
         'capability_type'       => 'post',
         'rewrite'               => array('slug' => 'article'),
         'supports'              => array('title','thumbnail','excerpt'),
+        'taxonomies'            => array('category','post_tag'),
     );
     register_post_type('article', $args );
 }
@@ -305,11 +305,13 @@ add_action('add_meta_boxes', 'cleancraft_article_meta_boxes');
 
 // 3. Display Multiple Editors
 function article_meta_boxes_callback($post){
-
+    
+    // Add wp_nonce_field
     wp_nonce_field('article_meta_boxes_nonce', 'article_meta_boxes_nonce_fields');
 
     $article_overview = get_post_meta($post->ID, '_article_overview', true);
-    $article_details = get_post_meta($post->ID, '_article_details', true)
+    $article_details = get_post_meta($post->ID, '_article_details', true);
+    $article_galery = get_post_meta($post->ID, '_article_galery', true);
 
     ?>
         <p><strong>Article Overview</strong></p>
@@ -327,6 +329,26 @@ function article_meta_boxes_callback($post){
             'textarea_rows' => 10,
             'media_buttons' => true,
         )) ?>
+    <?php
+
+    ?>
+        <p><strong>Article Galery</strong></p>
+        <div id="gallery_wrapper" class="">
+            <ul id="article_image_galery" style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <?php
+                    if(!empty($article_galery)){
+                        $images = explode(',', $article_galery);
+
+                        foreach($images as $image){
+                            echo '<li>' . wp_get_attachment_image($image, 'thumbnail') . '</li>';
+                        }
+                    } 
+                ?>
+            </ul>
+        </div>
+
+        <input type="hidden" name="article_galery" id="article_galery" value="<?php echo esc_attr( $article_galery ); ?>">
+        <button type="button" class="article_galery_button" id="article_galery_button">Add</button>
     <?php
 }
 
@@ -351,14 +373,35 @@ function cleancraft_article_save($post_id){
         'article_details' => '_article_details',
     );
 
+    // For Save Editors
     foreach ($fields as $field => $meta_key){
         if(isset($_POST[$field])){
             update_post_meta( $post_id, $meta_key, wp_kses_post( $_POST[$field] ) );
         }
     }
 
+    // For Save Image
+    if(isset($_POST['article_galery'])){
+        update_post_meta($post_id, '_article_galery', sanitize_text_field( $_POST['article_galery'] ));
+    }
+
 }
 add_action('save_post','cleancraft_article_save');
 
 
-// 5. Add Custome Taxonomy
+// 5. Article Image Admin Enqueue
+function cleancraft_article_admin_media($hook){
+    global $post;
+
+    if (in_array($hook, array('post.php','post-new.php')) && isset($post) && $post->post_type === 'article') {
+            wp_enqueue_media();
+            wp_enqueue_script(
+                'article-gallery-js',
+                get_template_directory_uri() . '/assets/js/article-gallery.js',
+                array('jquery'),
+                '1.0',
+                true
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'cleancraft_article_admin_media');
