@@ -259,18 +259,18 @@ function cleancraft_article(){
     $labels = array(
         'name' => 'Article',
         'singular_name' => 'Article',
-        'all_item' => 'All Articles',
+        'all_items' => 'All Articles',
         'new_item' => 'New Article',
         'edit_item' => 'Edit Article',
         'view_item' => 'View Article',
-        'add_item'  => 'Add New Article',
+        'add_new'  => 'Add New Article',
         'add_new_item' => 'Add New Article',
         'not_found' => 'No Article found!! Please add a Article.',
     );
     $args = array(
         'labels' => $labels,
         'menu_icon' => 'dashicons-id-alt',
-        'meni_position'         => 8,
+        'menu_position'         => 8,
         'public'                => true,
         'publicly_queryable'    => true,
         'has_archive'           => true,
@@ -282,9 +282,10 @@ function cleancraft_article(){
         'rewrite'               => array('slug' => 'article'),
         'supports'              => array('title','thumbnail','excerpt'),
     );
-    register_post_type('article', $args, true );
+    register_post_type('article', $args );
 }
-add_filter('init', 'cleancraft_article');
+add_action('init', 'cleancraft_article');
+
 
 
 //  2. Add Custome Meta Box
@@ -300,22 +301,33 @@ function cleancraft_article_meta_boxes(){
 }
 add_action('add_meta_boxes', 'cleancraft_article_meta_boxes');
 
+
+
 // 3. Display Multiple Editors
 function article_meta_boxes_callback($post){
 
     wp_nonce_field('article_meta_boxes_nonce', 'article_meta_boxes_nonce_fields');
 
-    $article_overview = get_post_meta($post->ID, 'article_overview', true);
+    $article_overview = get_post_meta($post->ID, '_article_overview', true);
+    $article_details = get_post_meta($post->ID, '_article_details', true)
 
     ?>
         <p><strong>Article Overview</strong></p>
         <?php wp_editor($article_overview, 'article_overview', array(
-            'textarea_name' => 'Article Overview',
-            'textarea_rows' => 8,
+            'textarea_name' => 'article_overview',
+            'textarea_rows' => 6,
             'media_buttons' => true,
         )); ?>
     <?php
 
+    ?>
+        <p><strong>Article Details</strong></p>
+        <?php wp_editor($article_details, 'article_details', array(
+            'textarea_name' => 'article_details',
+            'textarea_rows' => 10,
+            'media_buttons' => true,
+        )) ?>
+    <?php
 }
 
 
@@ -336,13 +348,17 @@ function cleancraft_article_save($post_id){
 
     $fields = array(
         'article_overview' => '_article_overview',
+        'article_details' => '_article_details',
     );
 
     foreach ($fields as $field => $meta_key){
         if(isset($_POST[$field])){
-            update_post_meta( $post_id, $meta_key, wp_kses_post( $field ) );
+            update_post_meta( $post_id, $meta_key, wp_kses_post( $_POST[$field] ) );
         }
     }
 
 }
 add_action('save_post','cleancraft_article_save');
+
+
+// 5. Add Custome Taxonomy
