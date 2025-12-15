@@ -1,0 +1,60 @@
+/* Wrapper */
+#questions-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Single Question Card */
+.question-item {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    padding: 16px;
+}
+
+/* Labels */
+.question-item label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* Inputs & Select */
+.question-item input[type="text"],
+.question-item select {
+    width: 100%;
+    padding: 6px 8px;
+    margin-bottom: 12px;
+}
+
+/* Type dropdown spacing */
+.qst-type {
+    max-width: 200px;
+}
+
+/* Text answer */
+.qst-text {
+    margin-top: 10px;
+}
+
+/* Radio options box */
+.qst-radio {
+    margin-top: 10px;
+    padding-left: 20px;
+    border-left: 3px solid #2271b1;
+}
+
+/* Radio option input */
+.qst-radio input[type="text"] {
+    margin-bottom: 8px;
+}
+
+/* Buttons */
+#add-question {
+    margin-top: 20px;
+}
+
+.add-option {
+    margin-top: 5px;
+}

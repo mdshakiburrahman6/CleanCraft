@@ -33,10 +33,12 @@ function cleancraft_question_from_meta_box(){
 add_action('add_meta_boxes', 'cleancraft_question_from_meta_box');
 
 
+
 // =============================
 // Enqueue Admin JS
 // =============================
 function cleancraft_question_form_admin_assets($hook){
+
     global $post;
 
     if (
@@ -44,6 +46,12 @@ function cleancraft_question_form_admin_assets($hook){
         isset($post) &&
         $post->post_type === 'question_from'
     ) {
+
+        wp_enqueue_style(
+            'cleancraft-question-form-css',
+            get_template_directory_uri() . '/assets/css/question-form-admin.css'
+        );
+
         wp_enqueue_script(
             'cleancraft-question-form-js',
             get_template_directory_uri() . '/assets/js/question-form-admin.js',
