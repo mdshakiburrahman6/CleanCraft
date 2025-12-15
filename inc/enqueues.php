@@ -10,6 +10,10 @@ function cleancraft_enqueues(){
     wp_register_style('cleancract_custome_css', get_template_directory_uri() . '/assets/css/custome.css' , array(), '1.0.0', 'all');
     wp_enqueue_style('cleancract_custome_css');
 
+    // Enqueue admin CSS
+    // wp_register_style('cleancract_admin_css', get_template_directory_uri() . '/assets/css/admin.css' , array(), '1.0.0', 'all');
+    // wp_enqueue_style('cleancract_admin_css');
+
     // Enqueue Bootstrap CSS
     wp_register_style('cleancraft_bootstrap_css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css');
     wp_enqueue_style('cleancraft_bootstrap_css');

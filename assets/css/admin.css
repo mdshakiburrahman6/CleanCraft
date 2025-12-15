@@ -1,0 +1,21 @@
+#faq-text,
+#faq-radio{
+    display:none;
+}
+
+.faq-builder{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+.faq-option-row{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.faq-option-label{
+    font-weight: bold;
+    min-width: 20px;
+}

@@ -462,7 +462,7 @@ add_action('add_meta_boxes', 'cleancraft_faq_add_meta_box');
 
 
 // 3. Meta box Callbacl --  Frontend UI
-
+/*
 function cleancraft_faq_callback($post){
 
     wp_nonce_field('cleancraft_faq_callback_nonce', 'cleancraft_faq_callback_nonce_field');
@@ -472,7 +472,7 @@ function cleancraft_faq_callback($post){
     $type = $type ? $type : 'text';
 
     ?>
-        <div class="faq-area" id="faq-area" style="display: flex; flex-direction: column; gap: 20px; justify-content: start;align-items: start;">
+        <!-- <div class="faq-area" id="faq-area" style="display: flex; flex-direction: column; gap: 20px; justify-content: start;align-items: start;">
             <div>
                 <label for="faq_question">Question</label>
                 <input type="text" name="faq_question" value="<?php echo esc_attr( $question ); ?>">
@@ -485,57 +485,142 @@ function cleancraft_faq_callback($post){
                     <option  <?php selected($type, 'radio'); ?>  value="radio">Radio</option>
                 </select>
             </div>
-        </div>    
+        </div>     -->
+    <?php
+} */
+
+    function cleancraft_faq_admin_assets($hook){
+
+    global $post;
+
+    if (
+        in_array($hook, ['post.php','post-new.php']) &&
+        isset($post) &&
+        $post->post_type === 'faq'
+    ) {
+        wp_enqueue_style(
+            'faq-admin-css',
+            get_template_directory_uri() . '/assets/css/admin.css'
+        );
+
+        wp_enqueue_script(
+            'faq-admin-js',
+            get_template_directory_uri() . '/assets/js/faq-admin.js',
+            ['jquery'],
+            null,
+            true
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'cleancraft_faq_admin_assets');
+function cleancraft_faq_callback($post){
+
+    wp_nonce_field(
+        'cleancraft_faq_nonce',
+        'cleancraft_faq_nonce_field'
+    );
+
+    $question = get_post_meta($post->ID, '_faq_question', true);
+    $type     = get_post_meta($post->ID, '_faq_type', true);
+    $answer   = get_post_meta($post->ID, '_faq_answer', true);
+    $options  = get_post_meta($post->ID, '_faq_options', true);
+
+    $type    = $type ? $type : 'text';
+    $options = is_array($options) ? $options : [''];
+    ?>
+
+    <div id="faq-builder" class="faq-builder">
+
+        <!-- Question -->
+        <div>
+            <label><strong>Question</strong></label>
+            <input type="text" name="faq_question"
+                value="<?php echo esc_attr($question); ?>"
+                style="width:100%;">
+        </div>
+
+        <!-- Type -->
+        <div>
+            <label><strong>Type</strong></label>
+            <select name="faq_type" id="faq_type">
+                <option value="text" <?php selected($type,'text'); ?>>Text</option>
+                <option value="radio" <?php selected($type,'radio'); ?>>Radio</option>
+            </select>
+        </div>
+
+        <!-- TEXT -->
+        <div id="faq-text">
+            <label><strong>Answer (Text)</strong></label>
+            <input type="text" name="faq_answer"
+                value="<?php echo esc_attr($answer); ?>"
+                style="width:100%;">
+        </div>
+
+        <!-- RADIO -->
+        <div id="faq-radio">
+            <label><strong>Options</strong></label>
+
+            <div id="faq-options-wrapper">
+                <?php foreach ($options as $i => $opt): ?>
+                    <div class="faq-option-row">
+                        <span class="faq-option-label">
+                            <?php echo chr(65 + $i); ?>
+                        </span>
+                        <input type="text" name="faq_options[]"
+                            value="<?php echo esc_attr($opt); ?>">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <button type="button" id="add-radio-option" class="button">
+                Add option
+            </button>
+        </div>
+
+    </div>
     <?php
 }
 
 
-// 4. Save Post Meta
 
+// 4. Save Post Meta
 function cleancraft_faq_save_meta($post_id){
 
-    // Only FAQ post type
-    if ( get_post_type($post_id) !== 'faq' ) {
-        return;
-    }
+    if ( get_post_type($post_id) !== 'faq' ) return;
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
+    if ( ! current_user_can('edit_post', $post_id) ) return;
 
-    // Autosave
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
-        return;
-    }
-
-    // Permission
-    if ( ! current_user_can('edit_post', $post_id) ) {
-        return;
-    }
-
-    // Nonce check
     if (
-        ! isset($_POST['cleancraft_faq_callback_nonce_field']) ||
+        ! isset($_POST['cleancraft_faq_nonce_field']) ||
         ! wp_verify_nonce(
-            $_POST['cleancraft_faq_callback_nonce_field'],
-            'cleancraft_faq_callback_nonce'
+            $_POST['cleancraft_faq_nonce_field'],
+            'cleancraft_faq_nonce'
         )
     ) {
         return;
     }
 
-    // Save meta
     if ( isset($_POST['faq_question']) ) {
-        update_post_meta(
-            $post_id,
-            '_faq_question',
-            sanitize_text_field($_POST['faq_question'])
-        );
+        update_post_meta($post_id, '_faq_question',
+            sanitize_text_field($_POST['faq_question']));
     }
 
-    // Save meta
     if ( isset($_POST['faq_type']) ) {
-        update_post_meta(
-            $post_id,
-            '_faq_type',
-            sanitize_text_field($_POST['faq_type'])
-        );
+        update_post_meta($post_id, '_faq_type',
+            sanitize_text_field($_POST['faq_type']));
+    }
+
+    if ( isset($_POST['faq_answer']) ) {
+        update_post_meta($post_id, '_faq_answer',
+            sanitize_text_field($_POST['faq_answer']));
+    }
+
+    if ( isset($_POST['faq_options']) ) {
+        $options = array_map('sanitize_text_field', $_POST['faq_options']);
+        update_post_meta($post_id, '_faq_options', $options);
     }
 }
 add_action('save_post','cleancraft_faq_save_meta');
+
+
+
