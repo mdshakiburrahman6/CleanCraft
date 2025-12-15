@@ -275,5 +275,24 @@ SIngle Article
 
 
 /* ================================
+FAQ DASHVOARD STYLES
+==================================*/
+/* #faq-area{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: start;
+    align-items: start;
+} */
+.inside div#faq-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: start;
+    align-items: start;
+}
+
+
+/* ================================
 Responsive Design
 ==================================*/

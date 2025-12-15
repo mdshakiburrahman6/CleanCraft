@@ -437,7 +437,7 @@ function cleancraft_questions_faq(){
         'hierarchical'          => false,
         'show_ui'               => true,
         'capability_type'       => 'post',
-        'rewrite'               => array('slug' => 'article'),
+        'rewrite'               => array('slug' => 'faq'),
         'supports'              => array('title','thumbnail','excerpt'),
         'taxonomies'            => array('category','post_tag'),
     );
@@ -451,7 +451,7 @@ function cleancraft_faq_add_meta_box(){
     add_meta_box(
 
         'cleancraft_faq_id',
-        'cleancraft_faq',
+        'FAQ Question',
         'cleancraft_faq_callback',
         'faq',
         'normal',
@@ -461,5 +461,81 @@ function cleancraft_faq_add_meta_box(){
 add_action('add_meta_boxes', 'cleancraft_faq_add_meta_box');
 
 
-// 3. 
+// 3. Meta box Callbacl --  Frontend UI
 
+function cleancraft_faq_callback($post){
+
+    wp_nonce_field('cleancraft_faq_callback_nonce', 'cleancraft_faq_callback_nonce_field');
+
+    $question = get_post_meta($post->ID, '_faq_question', true);
+    $type = get_post_meta($post->ID, '_faq_type', true);
+    $type = $type ? $type : 'text';
+
+    ?>
+        <div class="faq-area" id="faq-area" style="display: flex; flex-direction: column; gap: 20px; justify-content: start;align-items: start;">
+            <div>
+                <label for="faq_question">Question</label>
+                <input type="text" name="faq_question" value="<?php echo esc_attr( $question ); ?>">
+            </div>
+
+            <div>
+                <label for="faq_type">Type</label>
+                <select name="faq_type" id="faq_type">
+                    <option <?php selected($type, 'text'); ?> value="text">Text</option>
+                    <option  <?php selected($type, 'radio'); ?>  value="radio">Radio</option>
+                </select>
+            </div>
+        </div>    
+    <?php
+}
+
+
+// 4. Save Post Meta
+
+function cleancraft_faq_save_meta($post_id){
+
+    // Only FAQ post type
+    if ( get_post_type($post_id) !== 'faq' ) {
+        return;
+    }
+
+    // Autosave
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // Permission
+    if ( ! current_user_can('edit_post', $post_id) ) {
+        return;
+    }
+
+    // Nonce check
+    if (
+        ! isset($_POST['cleancraft_faq_callback_nonce_field']) ||
+        ! wp_verify_nonce(
+            $_POST['cleancraft_faq_callback_nonce_field'],
+            'cleancraft_faq_callback_nonce'
+        )
+    ) {
+        return;
+    }
+
+    // Save meta
+    if ( isset($_POST['faq_question']) ) {
+        update_post_meta(
+            $post_id,
+            '_faq_question',
+            sanitize_text_field($_POST['faq_question'])
+        );
+    }
+
+    // Save meta
+    if ( isset($_POST['faq_type']) ) {
+        update_post_meta(
+            $post_id,
+            '_faq_type',
+            sanitize_text_field($_POST['faq_type'])
+        );
+    }
+}
+add_action('save_post','cleancraft_faq_save_meta');
