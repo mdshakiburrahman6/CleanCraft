@@ -405,3 +405,61 @@ function cleancraft_article_admin_media($hook){
     }
 }
 add_action('admin_enqueue_scripts', 'cleancraft_article_admin_media');
+
+
+
+
+/*===================================================================
+                        Post Type Question
+===================================================================*/
+
+// 1. Register Post Type
+function cleancraft_questions_faq(){
+    $labels = array(
+        'name' => 'FAQ',
+        'singular_name' => 'FAQ',
+        'all_items' => 'All FAQs',
+        'new_item' => 'New FAQ',
+        'edit_item' => 'Edit FAQ',
+        'view_item' => 'View FAQ',
+        'add_new'  => 'Add New FAQ',
+        'add_new_item' => 'Add New FAQ',
+        'not_found' => 'No FAQ found!! Please add a FAQ.',
+    );
+    $args = array(
+        'labels' => $labels,
+        'menu_icon' => 'dashicons-editor-help',
+        // 'menu_position'         => 8,
+        'public'                => true,
+        'publicly_queryable'    => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => true,
+        'hierarchical'          => false,
+        'show_ui'               => true,
+        'capability_type'       => 'post',
+        'rewrite'               => array('slug' => 'article'),
+        'supports'              => array('title','thumbnail','excerpt'),
+        'taxonomies'            => array('category','post_tag'),
+    );
+    register_post_type('faq', $args );
+}
+add_action('init', 'cleancraft_questions_faq');
+
+
+// 2. Add Meta Box
+function cleancraft_faq_add_meta_box(){
+    add_meta_box(
+
+        'cleancraft_faq_id',
+        'cleancraft_faq',
+        'cleancraft_faq_callback',
+        'faq',
+        'normal',
+        'high',
+    );
+}
+add_action('add_meta_boxes', 'cleancraft_faq_add_meta_box');
+
+
+// 3. 
+
