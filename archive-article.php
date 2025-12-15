@@ -5,7 +5,7 @@
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-10">
                     <div class="post-cards">
 
                         <?php 
@@ -35,6 +35,11 @@
                         ?>
 
                     </div>
+                </div>
+                <div class="col-md-2">
+                    <h3>Sidebar</h3>
+                    <br>
+                    <p><strong>Total Artcle : </strong> <span><?php echo wp_count_posts('article')->publish; ?></span> </p>
                 </div>
             </div>
         </div>

@@ -1,17 +1,14 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function (jQuery) {
 
     let galleryFrame;
 
-    $('#article_galery_button').on('click', function (e) {
+    jQuery('#article_galery_button').on('click', function (e) {
         e.preventDefault();
 
-        // যদি আগেই media frame তৈরি থাকে
         if (galleryFrame) {
             galleryFrame.open();
             return;
         }
-
-        // Media frame তৈরি
         galleryFrame = wp.media({
             title: 'Select Article Gallery Images',
             button: {
@@ -20,28 +17,25 @@ jQuery(document).ready(function ($) {
             multiple: true
         });
 
-        // Image select হলে
         galleryFrame.on('select', function () {
 
             let selection = galleryFrame.state().get('selection');
             let ids = [];
 
-            // আগের preview clear
-            $('#gallery_wrapper ul').empty();
+            jQuery('#gallery_wrapper ul').empty();
 
             selection.each(function (attachment) {
                 attachment = attachment.toJSON();
                 ids.push(attachment.id);
 
-                $('#gallery_wrapper ul').append(
+                jQuery('#gallery_wrapper ul').append(
                     '<li style="display:inline-block;margin:5px;">' +
                         '<img src="' + attachment.sizes.thumbnail.url + '" />' +
                     '</li>'
                 );
             });
 
-            // Hidden input-এ ID save
-            $('#article_galery').val(ids.join(','));
+            jQuery('#article_galery').val(ids.join(','));
         });
 
         galleryFrame.open();
