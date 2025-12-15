@@ -18,4 +18,15 @@
 .faq-option-label{
     font-weight: bold;
     min-width: 20px;
+    background: red;
+}
+#add-question{
+    width: 150px;
+    padding: 5px 10px;
+}
+
+/* ============== */
+
+.qst-radio {
+    display: none;
 }

@@ -438,7 +438,7 @@ function cleancraft_questions_faq(){
         'show_ui'               => true,
         'capability_type'       => 'post',
         'rewrite'               => array('slug' => 'faq'),
-        'supports'              => array('title','thumbnail','excerpt'),
+        'supports'              => array('title'),
         'taxonomies'            => array('category','post_tag'),
     );
     register_post_type('faq', $args );
@@ -489,7 +489,8 @@ function cleancraft_faq_callback($post){
     <?php
 } */
 
-    function cleancraft_faq_admin_assets($hook){
+    // Enque JS
+function cleancraft_faq_admin_assets($hook){
 
     global $post;
 
@@ -513,6 +514,8 @@ function cleancraft_faq_callback($post){
     }
 }
 add_action('admin_enqueue_scripts', 'cleancraft_faq_admin_assets');
+
+
 function cleancraft_faq_callback($post){
 
     wp_nonce_field(
@@ -530,7 +533,7 @@ function cleancraft_faq_callback($post){
     ?>
 
     <div id="faq-builder" class="faq-builder">
-
+<!---------------------------------------- Faq ----------------------------------->
         <!-- Question -->
         <div>
             <label><strong>Question</strong></label>
@@ -566,8 +569,7 @@ function cleancraft_faq_callback($post){
                         <span class="faq-option-label">
                             <?php echo chr(65 + $i); ?>
                         </span>
-                        <input type="text" name="faq_options[]"
-                            value="<?php echo esc_attr($opt); ?>">
+                        <input type="text" name="faq_options[]" value="<?php echo esc_attr($opt); ?>">
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -576,6 +578,14 @@ function cleancraft_faq_callback($post){
                 Add option
             </button>
         </div>
+
+        
+<!---------------------------------------- Faq ----------------------------------->
+
+    <button type="button" id="add-question" class="button">
+        Add Question
+    </button>
+
 
     </div>
     <?php
