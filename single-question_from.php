@@ -9,49 +9,41 @@ $questions = is_array($questions) ? $questions : [];
 
 <div class="question-form-wrapper" style="max-width:700px;margin:40px auto;">
 
-    <h1><?php the_title(); ?></h1>
+   <div class="div question-header">
+        <h1 style="margin-bottom:30px;"><?php the_title(); ?></h1>
+   </div>
 
-    <form method="post">
+       <div class="question-area">
+            <?php foreach ($questions as $index => $q): ?>
 
-        <?php foreach ($questions as $index => $q): ?>
+                <div class="question-block" style="margin-bottom:30px;">
 
-            <div class="question-block" style="margin-bottom:30px;">
+                    <p><strong><?php echo esc_html($q['question']); ?></strong></p>
 
-                <p><strong><?php echo esc_html($q['question']); ?></strong></p>
+                    
+                    <?php if($q['type']=='text') : ?>
+                        <p><?php echo esc_html($q['answer']); ?></p>
+                    <?php  
+                        elseif ($q['type']=='radio') :
+                            if(!empty($q['options'])) :
+                    ?>
+                        <ul>
+                           <?php foreach($q['options'] as $opt) : 
+                                    if(!empty($opt)) :
+                            ?>
+                                 <li><?php echo esc_html( $opt ); ?></li>
+                            <?php   endif;
+                                endforeach;
+                            ?>
+                        </ul>
+                    <?php endif; ?>
+                    <?php endif; ?>
 
-                <?php if ($q['type'] === 'text'): ?>
 
-                    <input
-                        type="text"
-                        name="answers[<?php echo $index; ?>]"
-                        placeholder="Your answer"
-                        style="width:100%;padding:10px;"
-                    >
+                </div>
 
-                <?php elseif ($q['type'] === 'radio'): ?>
-
-                    <?php foreach ($q['options'] as $opt): ?>
-                        <label style="display:block;margin-bottom:8px;">
-                            <input
-                                type="radio"
-                                name="answers[<?php echo $index; ?>]"
-                                value="<?php echo esc_attr($opt); ?>"
-                            >
-                            <?php echo esc_html($opt); ?>
-                        </label>
-                    <?php endforeach; ?>
-
-                <?php endif; ?>
-
-            </div>
-
-        <?php endforeach; ?>
-
-        <button type="submit" style="padding:10px 20px;">
-            Submit
-        </button>
-
-    </form>
+            <?php endforeach; ?>
+       </div>
 
 </div>
 

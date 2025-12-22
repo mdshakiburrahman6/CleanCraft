@@ -9,6 +9,7 @@ function cleancraft_question_from_register(){
             'singular_name' => 'Question Form',
         ),
         'public' => true,
+        'has_archive' => true,
         'menu_icon' => 'dashicons-format-status',
         'rewrite' => array('slug' => 'question_form'),
         'supports' => array('title'),
