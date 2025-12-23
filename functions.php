@@ -25,4 +25,7 @@ include_once 'inc/custome_post_type.php';
 // include Q&A Register
 include_once 'inc/question_form.php';
 
+// include Q&A Register
+include_once 'inc/repeater_manager.php';
+
 
